@@ -52,6 +52,8 @@ public class SurveyPresenter implements SurveyFetchInterface.Presenter {
 
             Map<String, String> data = new HashMap<>();
             data.put("access_token", AppController.getInstance().getResources().getString(R.string.api_key));
+            data.put("page", "1");
+            data.put("per_page", "10");
 
 
             APIInterface apiService = Utils.getClient(AppController.getInstance().getResources().getString(R.string.base_url)).create(APIInterface.class);
@@ -108,8 +110,10 @@ public class SurveyPresenter implements SurveyFetchInterface.Presenter {
                                     });
                                 }
 
-
-                                JSONArray answersArray = questionArray.getJSONObject(j).getJSONArray("answers");
+/**
+ * Add answers
+ */
+                               /* JSONArray answersArray = questionArray.getJSONObject(j).getJSONArray("answers");
                                 for (int a = 0; a < answersArray.length(); a++) {
                                     final Answers answers = Utils.getGsonObject().fromJson(answersArray.getJSONObject(a).toString(), Answers.class);
                                     try (Realm realm = Realm.getDefaultInstance()) {
@@ -120,7 +124,7 @@ public class SurveyPresenter implements SurveyFetchInterface.Presenter {
                                             }
                                         });
                                     }
-                                }
+                                }*/
                             }
                         }
 

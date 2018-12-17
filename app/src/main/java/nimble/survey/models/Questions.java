@@ -16,6 +16,8 @@ public class Questions extends RealmObject {
     private String description;
     @SerializedName("cover_image_url")
     private String coverImage;
+    @SerializedName("display_type")
+    private String displayType;
 
 
     public String getSurveyId() {
