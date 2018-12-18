@@ -27,6 +27,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Utils {
 
+    public static int page = 1;
+    public static int per_page_limit = 20;
+
     public static Gson getGsonObject() {
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {

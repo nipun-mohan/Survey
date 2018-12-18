@@ -8,13 +8,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.List;
 
 import nimble.survey.adapters.ContentFragmentAdapter;
@@ -36,13 +39,12 @@ public class MainActivity extends AppCompatActivity implements SurveyFetchInterf
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         indicatorLayout = findViewById(R.id.indicatorLayout);
 
-        setTitle("");
         dialog = new ProgressDialog(this);
         surveyPresenter = new SurveyPresenter(this); //pass the view reference to the presenter
         setPresenter(surveyPresenter);
-        mPresenter.start();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -50,11 +52,10 @@ public class MainActivity extends AppCompatActivity implements SurveyFetchInterf
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        loadSurveys(false);
+
 //        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
-
-        APICall apiCall = new APICall();
-        apiCall.start();
 
     }
 
@@ -66,13 +67,10 @@ public class MainActivity extends AppCompatActivity implements SurveyFetchInterf
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
-
         if (id == R.id.menu_refresh) {
-            mPresenter.start();
+            loadSurveys(false);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -101,9 +99,14 @@ public class MainActivity extends AppCompatActivity implements SurveyFetchInterf
         indication = new Boolean[surveyList.size()];
         ContentFragmentAdapter.Holder holder = new ContentFragmentAdapter.Holder(getSupportFragmentManager());
 
+       DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
         for (int i = 0; i < surveyList.size(); i++) {
             holder.add(ContentFragment.newInstance(surveyList.get(i), i + 1));
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(15, 15);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)((width*3.5)/100), (int)((height*2)/100));
             layoutParams.setMargins(10, 10, 10, 10);
             final View view = new View(this);
             if (i == 0) {
@@ -113,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements SurveyFetchInterf
                 indication[i] = false;
 
             }
+
             view.setPadding(5, 5, 5, 5);
             view.setLayoutParams(layoutParams);
             indicatorLayout.addView(view);
@@ -125,10 +129,7 @@ public class MainActivity extends AppCompatActivity implements SurveyFetchInterf
             @Override
             public void onPageScrolled(int i, float v, int i1) {
                 Log.e("Scrolled", String.valueOf(i));
-
-
             }
-
             @Override
             public void onPageSelected(int i) {
                 Log.e("Selected", String.valueOf(i));
@@ -138,6 +139,8 @@ public class MainActivity extends AppCompatActivity implements SurveyFetchInterf
                 }
                 indication[i] = true;
                 setIndication();
+                if(i==DataRepo.newInstance().getSurveys().size())
+                    loadSurveys(true);
             }
 
             @Override
@@ -167,12 +170,31 @@ public class MainActivity extends AppCompatActivity implements SurveyFetchInterf
 
     }
 
+    /**
+     * Fetch all surveys
+     * Update access token if it is expired
+     */
+    private void loadSurveys(boolean isLoadMore) {
+        int currentTime = Calendar.getInstance().get(Calendar.MINUTE);
+        int fetchTime = Integer.parseInt(Pref.getValue(Pref.TYPE.TOKEN_FETCH_TIME.toString(), "0"));
+        int expiry = Integer.parseInt(Pref.getValue(Pref.TYPE.EXPIRY.toString(), "0"));
+        if (currentTime - fetchTime > expiry) {
+            Log.i("Access token Expired", "True");
+            APICall apiCall = new APICall();
+            apiCall.start(mPresenter, isLoadMore);
+        } else {
+            mPresenter.start(isLoadMore);
+        }
+    }
+
     public void startSpin() {
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage(getResources().getString(R.string.loading));
-        dialog.setIndeterminate(true);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
+        if (dialog != null) {
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage(getResources().getString(R.string.loading));
+            dialog.setIndeterminate(true);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+        }
 
     }
 

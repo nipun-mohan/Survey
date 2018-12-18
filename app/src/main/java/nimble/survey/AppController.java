@@ -14,6 +14,7 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Pref.openPref(this);
         Realm.init(this);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
                 .name(Realm.DEFAULT_REALM_NAME)

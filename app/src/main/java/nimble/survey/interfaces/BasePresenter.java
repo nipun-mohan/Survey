@@ -5,5 +5,5 @@ package nimble.survey.interfaces;
  */
 
 public interface BasePresenter {
-    void start();
+    void start(boolean isLoadMore);
 }
