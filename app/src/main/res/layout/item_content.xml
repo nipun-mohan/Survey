@@ -13,9 +13,7 @@
             android:id="@+id/img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:visibility="visible"
-            fresco:failureImage="@drawable/no_image" />
+            android:visibility="visible" />
 
 
         <TextView
@@ -26,10 +24,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:text="Content"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/content_description"
@@ -39,10 +37,10 @@
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:textSize="12sp"
             android:gravity="center"
             android:text="Content"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/btnTakeSurvey"

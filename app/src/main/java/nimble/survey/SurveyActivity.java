@@ -42,8 +42,6 @@ public class SurveyActivity extends AppCompatActivity {
         answersLayout = findViewById(R.id.layoutAnswers);
 
 
-//        coverImage.setImageURI(uri);
-
         if (getIntent().hasExtra("surveyId")) {
             surveyId = getIntent().getStringExtra("surveyId");
         }
@@ -88,6 +86,15 @@ public class SurveyActivity extends AppCompatActivity {
     int i = 0;
 
     private void updateView() {
+
+        if (i > 0)
+            btnPrev.show();
+        else
+            btnPrev.hide();
+        if (i + 1 == questions.size())
+            btnNext.hide();
+        else
+            btnNext.show();
 
         if (i < questions.size() && i >= 0) {
             txtQUestion.setText(i + 1 + ". " + questions.get(i).getDescription());

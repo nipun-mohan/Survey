@@ -10,8 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import nimble.survey.adapters.ContentAdapter;
 import nimble.survey.interfaces.RecyclerViewClickListener;
 import nimble.survey.models.Survey;
 
@@ -59,7 +59,6 @@ public class ContentFragment extends Fragment implements RecyclerViewClickListen
 
     @Override
     public void onClick(String id) {
-        Toast.makeText(getActivity(), id, Toast.LENGTH_SHORT).show();
         Intent i = new Intent(getContext(), SurveyActivity.class);
         i.putExtra("surveyId", id);
         startActivity(i);

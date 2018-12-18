@@ -73,9 +73,9 @@ public class Utils {
             public boolean onPreDraw() {
                 simpleDraweeView.getViewTreeObserver().removeOnPreDrawListener(this);
                 if (!isDetails)
-                    simpleDraweeView.getHierarchy().setFailureImage(AppController.getInstance().getResources().getDrawable(R.drawable.no_image), ScalingUtils.ScaleType.FIT_XY);
+                    simpleDraweeView.getHierarchy().setFailureImage(AppController.getInstance().getResources().getDrawable(R.drawable.no_image), ScalingUtils.ScaleType.FOCUS_CROP);
                 else
-                    simpleDraweeView.getHierarchy().setFailureImage(AppController.getInstance().getResources().getDrawable(R.drawable.bg_survey), ScalingUtils.ScaleType.FIT_XY);
+                    simpleDraweeView.getHierarchy().setFailureImage(AppController.getInstance().getResources().getDrawable(R.drawable.bg_survey), ScalingUtils.ScaleType.FOCUS_CROP);
                 ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                         .setResizeOptions(new ResizeOptions(simpleDraweeView.getWidth(), simpleDraweeView.getHeight()))
                         .build();

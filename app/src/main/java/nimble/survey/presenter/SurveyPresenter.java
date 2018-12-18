@@ -110,9 +110,9 @@ public class SurveyPresenter implements SurveyFetchInterface.Presenter {
                                     });
                                 }
 
-/**
- * Add answers
- */
+                            /**
+                             * Add answers
+                             */
                                /* JSONArray answersArray = questionArray.getJSONObject(j).getJSONArray("answers");
                                 for (int a = 0; a < answersArray.length(); a++) {
                                     final Answers answers = Utils.getGsonObject().fromJson(answersArray.getJSONObject(a).toString(), Answers.class);
@@ -142,55 +142,6 @@ public class SurveyPresenter implements SurveyFetchInterface.Presenter {
                         e.printStackTrace();
                     }
                     ((MainActivity) mDownloadView).stopSpin();
-                    /*try {
-
-                        for(int i=0;i<response.body().)
-                        JSONObject jsonObject = new JSONObject(response.body().toString());
-                        Log.e("Response", jsonObject.toString());
-                        if (jsonObject.has("Search")) {
-                            if (!isLoadMore) {
-                                try (Realm realm = Realm.getDefaultInstance()) {
-                                    realm.executeTransaction(new Realm.Transaction() {
-                                        @Override
-                                        public void execute(Realm realm) {
-                                            realm.where(Shows.class).findAll().deleteAllFromRealm();
-                                        }
-                                    });
-                                }
-                            }
-
-                            JSONArray shows = jsonObject.getJSONArray("Search");
-                            for (int i = 0; i < shows.length(); i++) {
-                                final Shows showList = Utils.getGsonObject().fromJson(shows.getJSONObject(i).toString(), Shows.class);
-                                try (Realm realm = Realm.getDefaultInstance()) {
-                                    realm.executeTransaction(new Realm.Transaction() {
-                                        @Override
-                                        public void execute(Realm realm) {
-                                            realm.copyToRealm(showList);
-                                        }
-                                    });
-                                }
-                            }
-
-                            List<Shows> showsList;
-                            try (Realm realm = Realm.getDefaultInstance()) {
-                                showsList = realm.where(Shows.class).findAll();
-                                if (showsList.size() > 0) {
-                                    DataRepo.newInstance().setShows(realm.copyFromRealm(showsList));
-                                    ((ShowFragment) mDownloadView).updateShowsUI();
-                                }
-
-                            }
-
-                        } else {
-                            ((ShowFragment) mDownloadView).notFound();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    ((MainActivity() mDownloadView).stopSpin();*/
-
                 }
 
                 @Override

@@ -1,4 +1,4 @@
-package nimble.survey;
+package nimble.survey.adapters;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import nimble.survey.R;
+import nimble.survey.Utils;
 import nimble.survey.interfaces.RecyclerViewClickListener;
 import nimble.survey.models.Survey;
 

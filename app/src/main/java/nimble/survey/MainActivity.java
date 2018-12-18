@@ -2,34 +2,40 @@ package nimble.survey;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.List;
 
-import nimble.survey.interfaces.RecyclerViewClickListener;
+import nimble.survey.adapters.ContentFragmentAdapter;
 import nimble.survey.interfaces.SurveyFetchInterface;
 import nimble.survey.models.DataRepo;
 import nimble.survey.models.Survey;
 import nimble.survey.presenter.SurveyPresenter;
-import nimble.survey.transforms.DefaultTransformer;
 
 public class MainActivity extends AppCompatActivity implements SurveyFetchInterface.View {
     ProgressDialog dialog;
     private SurveyFetchInterface.Presenter mPresenter;
     private SurveyPresenter surveyPresenter;
     private LinearLayout indicatorLayout;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         indicatorLayout = findViewById(R.id.indicatorLayout);
 
         setTitle("");
@@ -37,13 +43,55 @@ public class MainActivity extends AppCompatActivity implements SurveyFetchInterf
         surveyPresenter = new SurveyPresenter(this); //pass the view reference to the presenter
         setPresenter(surveyPresenter);
         mPresenter.start();
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
+
+        APICall apiCall = new APICall();
+        apiCall.start();
+
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.menu_refresh) {
+            mPresenter.start();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     Boolean[] indication;
 
     public void initViewPager() {
-        final VerticalViewPager viewPager = (VerticalViewPager) findViewById(R.id.vertical_viewpager);
+        if (indicatorLayout.getChildCount() > 0)
+            indicatorLayout.removeAllViews();
+        final VerticalViewPager viewPager = findViewById(R.id.vertical_viewpager);
         //viewPager.setPageTransformer(false, new ZoomOutTransformer());
         //viewPager.setPageTransformer(true, new StackTransformer());
         String title = "ContentFragment";
