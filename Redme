@@ -1,0 +1,8 @@
+Application Overview
+++++++++++++++++++++++
+Survey v1.0
+
+Simple MVP Design pattern
+Database - Realm DB
+Network Library - Retrofit
+Image Loading library - Fresco
