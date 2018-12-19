@@ -15,6 +15,14 @@ import nimble.survey.adapters.ContentAdapter;
 import nimble.survey.interfaces.RecyclerViewClickListener;
 import nimble.survey.models.Survey;
 
+/**
+ * This class is for single survey card - inside the view pager
+ *
+ * considering each fragment for each survey
+ *
+ */
+
+
 public class ContentFragment extends Fragment implements RecyclerViewClickListener {
 
     public ContentFragment() {
@@ -23,7 +31,6 @@ public class ContentFragment extends Fragment implements RecyclerViewClickListen
     public static Fragment newInstance(Survey survey, int position) {
         Bundle args = new Bundle();
         args.putParcelable("survey", survey);
-        args.putInt("position", position);
         ContentFragment fragment = new ContentFragment();
         fragment.setArguments(args);
         return fragment;
@@ -39,12 +46,12 @@ public class ContentFragment extends Fragment implements RecyclerViewClickListen
     }
 
     private void initToolbar(View view) {
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle(getSurvey().getTitle());
     }
 
     private void initRecyclerView(View view) {
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.content_list);
+        RecyclerView recyclerView = view.findViewById(R.id.content_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new ContentAdapter(getSurvey(), this));
     }
@@ -53,10 +60,11 @@ public class ContentFragment extends Fragment implements RecyclerViewClickListen
         return getArguments().getParcelable("survey");
     }
 
-    public int getPosition() {
-        return getArguments().getInt("position");
-    }
 
+    /**
+     * Take the survey - Onclick methods
+     * @param id
+     */
     @Override
     public void onClick(String id) {
         Intent i = new Intent(getContext(), SurveyActivity.class);

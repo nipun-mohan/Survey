@@ -1,6 +1,5 @@
 package nimble.survey.adapters;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,10 +15,14 @@ import nimble.survey.Utils;
 import nimble.survey.interfaces.RecyclerViewClickListener;
 import nimble.survey.models.Survey;
 
+/**
+ * Holds & render the survey card contents
+ */
+
 public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Survey survey;
 
-    RecyclerViewClickListener mlistener;
+    RecyclerViewClickListener mlistener;//Take the survey button click listener
 
     public ContentAdapter(Survey survey, RecyclerViewClickListener listener) {
         this.survey = survey;
@@ -35,7 +38,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final ContentView content = (ContentView) holder;
         Uri uri = Uri.parse(survey.getCoverImage() + "l");
-        Utils.setupImage(content.image, uri,false);
+        Utils.setupImage(content.image, uri, false);
         content.txtTitle.setText(survey.getTitle());
         content.txtDescription.setText(survey.getDescription());
 
@@ -46,17 +49,11 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 mlistener.onClick(survey.getSurveyId());
             }
         });
-        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mlistener.onClick(survey.getSurveyId());
-            }
-        });*/
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 1;//Single card in Single row (Single screen)
     }
 
     public class ContentView extends RecyclerView.ViewHolder {

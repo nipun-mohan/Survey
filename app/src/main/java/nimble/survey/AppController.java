@@ -14,7 +14,10 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //Preference initialization
         Pref.openPref(this);
+
+        //Realm DB initialization
         Realm.init(this);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
                 .name(Realm.DEFAULT_REALM_NAME)
@@ -22,12 +25,17 @@ public class AppController extends Application {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
+
+        //Fresco -  image loading library initialization
         Fresco.initialize(this);
         mContext = this;
     }
 
+    /**
+     * Application context method
+     * @return
+     */
     public static Context getInstance() {
-
         return mContext;
     }
 }

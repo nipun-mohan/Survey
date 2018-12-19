@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
+
+/**
+ * Question Database
+ */
 public class Questions extends RealmObject {
 
 

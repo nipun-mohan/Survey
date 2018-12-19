@@ -6,6 +6,10 @@ import java.util.List;
  * Created by Nipun on 12/12/2018.
  */
 
+
+/**
+ * Responsible for holds the data to be rendered on the screen
+ */
 public class DataRepo {
     private static DataRepo dataRepo;
 

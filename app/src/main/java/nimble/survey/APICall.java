@@ -23,16 +23,23 @@ import retrofit2.Callback;
 public class APICall {
 
 
-    SurveyFetchInterface.Presenter presenter;
-    boolean isLoadMore;
 
-    public void start(SurveyFetchInterface.Presenter mPresenter, boolean isLoadMore) {
+    SurveyFetchInterface.Presenter presenter;
+
+    /**
+     * Start the api call to update access token
+     * @param mPresenter
+     */
+    public void start(SurveyFetchInterface.Presenter mPresenter) {
         this.presenter = mPresenter;
-        this.isLoadMore = isLoadMore;
         FetchAccessToken task = new FetchAccessToken();
         task.execute();
     }
 
+
+    /**
+     * Async Task for API Call - Update/Fetch Access Token
+     */
     private class FetchAccessToken extends AsyncTask<String, Void, Boolean> {
         @Override
         protected Boolean doInBackground(String... params) {
@@ -60,7 +67,7 @@ public class APICall {
                         e.printStackTrace();
                     }
                     Log.e("Response", response.body().toString());
-                    presenter.start(isLoadMore);
+                    presenter.start();
                 }
 
                 @Override

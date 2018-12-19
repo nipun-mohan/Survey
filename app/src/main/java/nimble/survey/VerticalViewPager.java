@@ -8,6 +8,10 @@ import android.view.MotionEvent;
 
 import nimble.survey.transforms.DefaultTransformer;
 
+/**
+ *
+ * Displays pages vertically and enabled the swipe
+ */
 public class VerticalViewPager extends ViewPager {
 
     public VerticalViewPager(Context context) {

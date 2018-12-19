@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="api_key">2952682b61151d791f6dee214aaee0271b4fd2795e43001f90dec3bc8dadf7de</string>
     <string name="username">carlos@nimbl3.com</string>
     <string name="password">antikera</string>
     <string name="grant_type">password</string>

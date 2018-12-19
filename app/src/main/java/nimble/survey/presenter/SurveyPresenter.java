@@ -43,7 +43,7 @@ public class SurveyPresenter implements SurveyFetchInterface.Presenter {
     }
 
     @Override
-    public void start(boolean isLoadMore) {
+    public void start() {
         ((MainActivity) surveyView).startSpin();
         FetchShows task = new FetchShows();
         task.execute();

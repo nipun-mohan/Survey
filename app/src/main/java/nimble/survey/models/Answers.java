@@ -4,6 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
+
+/**
+ * Answers database
+ */
+
 public class Answers extends RealmObject {
 
     @SerializedName("id")
